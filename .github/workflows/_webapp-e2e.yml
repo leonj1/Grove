@@ -36,7 +36,7 @@ jobs:
   # list as JSON here and fan out over it.
   plan:
     name: Plan shards
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     outputs:
       shards: ${{ steps.plan.outputs.shards }}
     steps:
@@ -49,7 +49,7 @@ jobs:
   e2e:
     name: playwright ${{ matrix.shard }}/${{ inputs.shards }}
     needs: plan
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     strategy:
       # A failure in shard 2 says nothing about shard 3, and cancelling the rest
       # would hide how broad a regression is.

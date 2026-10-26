@@ -28,7 +28,7 @@ jobs:
   changes:
     name: Detect changed areas
     if: github.event_name != 'schedule'
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     outputs:
       python: ${{ steps.filter.outputs.python }}
       webapp: ${{ steps.filter.outputs.webapp }}
@@ -136,7 +136,7 @@ jobs:
     # install with `uv tool install`, which resolves fresh from PyPI and ignores
     # the lockfile — this job is the only one standing in that environment, and
     # it exists because an unbounded pin (`mcp>=1.2`) let SDK 2.0.0 through.
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     # Advisory on push/PR, blocking on the daily schedule. An unlocked resolve
     # can go red for reasons no PR author caused (an upstream major, a PyPI
     # blip); a required check that red-lights unrelated work gets routed around

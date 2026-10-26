@@ -34,7 +34,7 @@ on:
 jobs:
   gate:
     name: typecheck · vitest · styling · codegen · registry · ignored
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     steps:
       - uses: actions/checkout@v4
         with:

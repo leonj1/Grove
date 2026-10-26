@@ -30,7 +30,7 @@ jobs:
       github.event.action != 'closed' &&
       (github.event_name != 'pull_request' ||
        github.event.pull_request.head.repo.full_name == github.repository)
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -131,7 +131,7 @@ jobs:
       github.server_url != 'https://github.com' &&
       github.event_name == 'pull_request' &&
       github.event.action == 'closed'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     steps:
       - name: Remove PR preview
         run: |

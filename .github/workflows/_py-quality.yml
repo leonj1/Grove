@@ -39,7 +39,7 @@ on:
 jobs:
   quality:
     name: ruff · format · mypy · imports
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     steps:
       - uses: actions/checkout@v4
         with:

@@ -40,7 +40,7 @@ jobs:
     # Linux-only by design: tmux is the runtime dependency and native packaging
     # was retired, so an OS matrix cost minutes for no signal. The Windows/macOS
     # defensive code stays but is CI-unverified (tests/CLAUDE.md).
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     steps:
       - uses: actions/checkout@v4
         with:

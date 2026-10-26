@@ -59,7 +59,7 @@ permissions:
 jobs:
   screenshots:
     name: capture ${{ inputs.shots }} → ${{ inputs.target }}
-    runs-on: ${{ vars.CI_RUNNER_LABEL || 'ubuntu-latest' }}
+    runs-on: "${{ (vars.CI_RUNNER_LABEL || 'ubuntu-latest') == 'ubuntu-latest' && fromJSON('[\"self-hosted\",\"linux\",\"x64\"]') || (vars.CI_RUNNER_LABEL || 'ubuntu-latest') }}"
     # The local run is ~12 minutes and a cold runner adds npm ci, a Next build
     # and a Chromium download on top. act_runner's own ceiling is 1h; naming a
     # smaller one here means a slow run is reported as a timeout instead of
